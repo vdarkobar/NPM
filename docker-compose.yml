@@ -9,9 +9,9 @@ networks:
 secrets:
 
   DB_ROOT_PWD:
-    file: secrets/db_root_pwd.secret
+    file: .secrets/db_root_pwd.secret
   MYSQL_PWD:
-    file: secrets/mysql_pwd.secret
+    file: .secrets/mysql_pwd.secret
 
 services:
 
