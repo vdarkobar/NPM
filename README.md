@@ -28,9 +28,7 @@ RED='\033[0;31m'; NC='\033[0m'; echo -ne "${RED}Enter directory name: ${NC}"; re
 cd "$DIR" && git clone https://github.com/vdarkobar/NPM.git . && \
 chmod +x setup.sh && \
 ./setup.sh
-```   
-    
-Default Administrator User name:  `admin@example.com`, password: `changeme`.  
+```  
   
 ### Create <a href="https://dash.cloudflare.com/profile/api-tokens">CloudFlare API Token</a>.  
 
