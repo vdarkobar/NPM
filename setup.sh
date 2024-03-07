@@ -7,7 +7,7 @@ clear
 ######################################################
 GREEN='\033[0;32m'
 RED='\033[0;31m'
-NC='\033[0m' # No Color
+
 
 ###########################################
 # Function for displaying status messages #
@@ -24,6 +24,7 @@ status_message() {
   echo -e "${color}${message}${NC}"
 }
 
+
 ###########################################
 # Function to check command exit status   #
 ###########################################
@@ -33,6 +34,7 @@ check_exit_status() {
     exit 1
   fi
 }
+
 
 #######################################################
 # Start the installation of Docker and Docker Compose #
@@ -74,10 +76,11 @@ echo
 echo -e "${GREEN}Docker and Docker Compose(v2) installation completed.${NC}"
 echo
 
+
 #######
 # NPM #
 #######
-echo -ne "${GREEN}Enter Time Zone: "; read TZONE; \
+echo -ne "${GREEN}Enter Time Zone (e.g. Europe/Berlin): "; read TZONE; \
 echo -ne "${GREEN}Enter NPM Port Number: "; read PORTN; \
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/db_root_pwd.secret && \
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/mysql_pwd.secret && \
@@ -96,3 +99,41 @@ while true; do
         * ) echo "Please answer yes or no.";;
     esac
 done
+
+
+#######
+# UFW #
+#######
+echo
+echo -e "${GREEN}Preparing firewall for local access...${NC}"
+sleep 0.5 # delay for 0.5 seconds
+echo
+
+# Use the PORTN variable for the UFW rule
+sudo ufw allow "${PORTN}/tcp" comment "NPM custom port"
+sudo systemctl restart ufw
+echo
+
+
+##########
+# Access #
+##########
+echo
+echo -e "${GREEN}Access NPM instance at${NC}"
+sleep 0.5 # delay for 0.5 seconds
+echo
+
+# Get the primary local IP address of the machine more reliably
+LOCAL_IP=$(ip route get 1.1.1.1 | awk '{print $7; exit}')
+# Get the short hostname directly
+HOSTNAME=$(hostname -s)
+# Use awk more efficiently to extract the domain name from /etc/resolv.conf
+DOMAIN_LOCAL=$(awk '/^search/ {print $2; exit}' /etc/resolv.conf)
+# Directly concatenate HOSTNAME and DOMAIN, leveraging shell parameter expansion for conciseness
+LOCAL_DOMAIN="${HOSTNAME}${DOMAIN_LOCAL:+.$DOMAIN_LOCAL}"
+
+# Display variable values for verification
+echo
+echo -e "${GREEN} Local access:${NC} $LOCAL_IP:$PORTN"
+echo -e "${GREEN}             :${NC} $LOCAL_DOMAIN:$PORTN"
+echo
