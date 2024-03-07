@@ -82,6 +82,7 @@ echo
 #######
 echo -ne "${GREEN}Enter Time Zone (e.g. Europe/Berlin):${NC} "; read TZONE; \
 echo -ne "${GREEN}Enter NPM Port Number:${NC} "; read PORTN; \
+echo
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/db_root_pwd.secret && \
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/mysql_pwd.secret && \
 sed -i "s|01|${TZONE}|" .env && \
