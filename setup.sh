@@ -131,7 +131,12 @@ DOMAIN_LOCAL=$(awk '/^search/ {print $2; exit}' /etc/resolv.conf)
 # Directly concatenate HOSTNAME and DOMAIN, leveraging shell parameter expansion for conciseness
 LOCAL_DOMAIN="${HOSTNAME}${DOMAIN_LOCAL:+.$DOMAIN_LOCAL}"
 
-# Display variable values for verification
+# Display access instructions
+echo
+echo -e "${GREEN} Use credentials:${NC}"
+echo
+echo -e "${GREEN} User name:${NC} admin@example.com"
+echo -e "${GREEN} Password:${NC} changeme"
 echo
 echo -e "${GREEN} Local access:${NC} $LOCAL_IP:$PORTN"
 echo -e "${GREEN}             :${NC} $LOCAL_DOMAIN:$PORTN"
