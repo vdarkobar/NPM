@@ -28,19 +28,13 @@ RED='\033[0;31m'; NC='\033[0m'; echo -ne "${RED}Enter directory name: ${NC}"; re
 cd "$DIR" && git clone https://github.com/vdarkobar/NPM.git . && \
 chmod +x setup.sh && \
 ./setup.sh
-```
+```   
+    
+Default Administrator User name:  `admin@example.com`, password: `changeme`.  
   
-Visit your *server local ip* + *port number* designated during setup:  
-```Bash
-http://LocalIP:PortNumber  
-```
-  
-Default Administrator User name:  `admin@example.com`, password: `changeme`.
-```
-  
-### Create <a href="https://dash.cloudflare.com/profile/api-tokens">CloudFlare API Token</a>. 
+### Create <a href="https://dash.cloudflare.com/profile/api-tokens">CloudFlare API Token</a>.  
 
-Used for *DNS Challenge* to create *Wildcard Certificates* for your entire Domain (*unlimited Subdomains*).
+Used for *DNS Challenge* to create *Wildcard Certificates* for your entire Domain (*unlimited Subdomains*).  
   
 > CloudFlare: Profile > API Tokens > Create Token > Edit zone DNS - Use Template  
   
