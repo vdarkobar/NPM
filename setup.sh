@@ -9,7 +9,6 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-
 ###########################################
 # Function for displaying status messages #
 ###########################################
@@ -81,8 +80,8 @@ echo
 #######
 # NPM #
 #######
-echo -ne "${GREEN}Enter Time Zone (e.g. Europe/Berlin): "; read TZONE; \
-echo -ne "${GREEN}Enter NPM Port Number: "; read PORTN; \
+echo -ne "${GREEN}Enter Time Zone (e.g. Europe/Berlin):${NC} "; read TZONE; \
+echo -ne "${GREEN}Enter NPM Port Number:${NC} "; read PORTN; \
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/db_root_pwd.secret && \
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/mysql_pwd.secret && \
 sed -i "s|01|${TZONE}|" .env && \
@@ -93,7 +92,7 @@ sudo rm -rf shared/ && \
 sudo chown -R root:root .secrets/ && \
 sudo chmod -R 600 .secrets/ && \
 while true; do
-    read -p "Execute 'docker compose up -d' now? (y/n)" yn
+    read -p "Execute 'docker compose up -d' now?${NC} (y/n)" yn
     case $yn in
         [Yy]* ) sudo docker compose up -d; break;;
         [Nn]* ) exit;;
@@ -119,10 +118,8 @@ echo
 ##########
 # Access #
 ##########
-echo
 echo -e "${GREEN}Access NPM instance at${NC}"
 sleep 0.5 # delay for 0.5 seconds
-echo
 
 # Get the primary local IP address of the machine more reliably
 LOCAL_IP=$(ip route get 1.1.1.1 | awk '{print $7; exit}')
