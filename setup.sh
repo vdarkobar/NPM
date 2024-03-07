@@ -80,23 +80,42 @@ echo
 #######
 # NPM #
 #######
-echo -ne "${GREEN}Enter Time Zone (e.g. Europe/Berlin):${NC} "; read TZONE; \
-echo -ne "${GREEN}Enter NPM Port Number (49152-65535):${NC} "; read PORTN; \
+# Prompt user for input
+echo -ne "${GREEN}Enter Time Zone (e.g. Europe/Berlin):${NC} "; read TZONE;
+echo -ne "${GREEN}Enter NPM Port Number(49152-65535):${NC} "; read PORTN;
 echo
-echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/db_root_pwd.secret && \
-echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/mysql_pwd.secret && \
-sed -i "s|01|${TZONE}|" .env && \
-sed -i "s|02|${PORTN}|" .env && \
-rm README.md && \
-rm letsencrypt/tmp && \
-sudo rm -rf shared/ && \
-sudo chown -R root:root .secrets/ && \
-sudo chmod -R 600 .secrets/ && \
+
+# Ensure .secrets directory exists before generating secrets
+mkdir -p .secrets || { echo -e "${RED}Failed to create .secrets directory.${NC}"; exit 1; }
+
+# Generate secrets
+echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/db_root_pwd.secret || { echo -e "${RED}Failed to generate db_root_pwd.secret.${NC}"; exit 1; }
+echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > .secrets/mysql_pwd.secret || { echo -e "${RED}Failed to generate mysql_pwd.secret.${NC}"; exit 1; }
+
+# Update .env file with user input
+sed -i "s|01|${TZONE}|" .env || { echo -e "${RED}Failed to update Time Zone in .env file.${NC}"; exit 1; }
+sed -i "s|02|${PORTN}|" .env || { echo -e "${RED}Failed to update Port Number in .env file.${NC}"; exit 1; }
+
+# Clean up, with checks for existence
+[[ -f README.md ]] && rm README.md
+[[ -d letsencrypt/tmp ]] && rm -r letsencrypt/tmp
+[[ -d shared ]] && sudo rm -rf shared/
+
+# Update permissions, assuming .secrets creation was successful
+sudo chown -R root:root .secrets/
+sudo chmod -R 600 .secrets/
+
+# Main loop for docker compose up command
 while true; do
     echo -ne "${GREEN}Execute docker compose now?${NC} (yes/no) "; read yn
     yn=$(echo "$yn" | tr '[:upper:]' '[:lower:]') # Convert input to lowercase
     case $yn in
-        yes ) sudo docker compose up -d; break;;
+        yes )
+            if ! sudo docker compose up -d; then
+                echo -e "${RED}Docker compose up failed. Check docker and docker-compose installation.${NC}";
+                exit 1;
+            fi
+            break;;
         no ) exit;;
         * ) echo -e "${RED}Please answer yes or no.${NC}";;
     esac
