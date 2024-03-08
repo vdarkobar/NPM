@@ -25,9 +25,9 @@ status_message() {
 }
 
 
-###########################################
-# Function to check command exit status   #
-###########################################
+#########################################
+# Function to check command exit status #
+#########################################
 check_exit_status() {
   if [[ $1 -ne 0 ]]; then
     status_message "error" "$2"
