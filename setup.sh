@@ -197,12 +197,12 @@ while true; do
     case $yn in
         yes )
             if ! sudo docker compose up -d; then
-                echo -e "${RED}Docker compose up failed. Check docker and docker-compose installation.${NC}";
+                echo -e "${RED}Docker compose up failed. Check docker and docker compose installation.${NC}";
                 exit 1;
             fi
             break;;
         no ) exit;;
-        * ) echo -e "${RED}Please answer yes or no.${NC}";;
+        * ) echo -e "${RED}Please answer${NC} yes or no";;
     esac
 done
 
