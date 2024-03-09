@@ -17,7 +17,11 @@ NC='\033[0m'
 echo
 echo -e "${GREEN} Before you begin:${NC}"
 echo
-echo -e "${GREEN} Enable Port forwarding${NC} (80, 443) ${GREEN}from your Router/Firewall to your NPM instance (VM).${NC}"
+echo -e "${GREEN} Enable Port forwarding${NC} (80, 443) ${GREEN}from your Router/Firewall to your NPM instance (VM):${NC}"
+# Get the primary local IP address of the machine more reliably
+LOCAL_IP=$(ip route get 1.1.1.1 | awk '{print $7; exit}')
+echo
+echo "      - $LOCAL_IP"
 echo
 echo -e "${GREEN} Decide what you will use for:${NC}"
 echo
@@ -188,6 +192,7 @@ sudo chmod -R 600 .secrets/
 # Main loop for docker compose up command
 while true; do
     echo -ne "${GREEN}Execute docker compose now?${NC} (yes/no) "; read yn
+    echo
     yn=$(echo "$yn" | tr '[:upper:]' '[:lower:]') # Convert input to lowercase
     case $yn in
         yes )
