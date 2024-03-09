@@ -9,6 +9,54 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+
+#################
+# Intro message #
+#################
+
+echo
+echo -e "${GREEN} Before you begin:${NC}"
+echo
+echo -e "${GREEN} Enable Port forwarding${NC} (80, 443) ${GREEN}from your Router/Firewall to your NPM instance (VM).${NC}"
+echo
+echo -e "${GREEN} Decide what you will use for:${NC}"
+echo
+echo "      - Time Zone and NPM Port Number."
+echo
+echo
+
+while true; do
+    echo -e "${GREEN} Continue? ${NC} (yes/no)"
+    echo
+    read choice
+    echo
+
+    # Convert choice to lowercase
+    choice=${choice,,} # This makes the script case insensitive
+
+    # Check if user entered "yes"
+    if [[ "$choice" == "yes" || "$choice" == "y" ]]; then
+
+        # Execute first command and echo -e message when done
+        echo
+        clear
+        echo -e "${GREEN} Executing script... ${NC}"
+        echo
+        break
+
+    # If user entered "no"
+    elif [[ "$choice" == "no" || "$choice" == "n" ]]; then
+        echo -e "${RED} Aborting script. ${NC}"
+        exit
+
+    # If user entered anything else, ask them to correct it
+    else
+        echo
+        echo -e "${YELLOW} Invalid input. Please enter${NC} 'yes' or 'no'"
+    fi
+done
+
+
 ###########################################
 # Function for displaying status messages #
 ###########################################
@@ -185,11 +233,21 @@ LOCAL_DOMAIN="${HOSTNAME}${DOMAIN_LOCAL:+.$DOMAIN_LOCAL}"
 
 # Display access instructions
 echo
-echo -e "${GREEN} Use credentials:${NC}"
-echo
-echo -e "${GREEN} User name:${NC} admin@example.com"
-echo -e "${GREEN} Password:${NC} changeme"
-echo
 echo -e "${GREEN} Local access:${NC} $LOCAL_IP:$PORTN"
 echo -e "${GREEN}             :${NC} $LOCAL_DOMAIN:$PORTN"
 echo
+echo -e "${GREEN} Use credentials:${NC}"
+echo
+echo -e "${GREEN} User name:${NC}    admin@example.com"
+echo -e "${GREEN} Password:${NC}     changeme"
+echo
+
+
+#####################################
+# Remove the Script from the system #
+#####################################
+echo
+echo -e "${RED} This Script Will Self Destruct!${NC}"
+echo
+# VERY LAST LINE OF THE SCRIPT:
+sudo rm "$0"
