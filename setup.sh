@@ -255,4 +255,4 @@ echo
 echo -e "${RED} This Script Will Self Destruct!${NC}"
 echo
 # VERY LAST LINE OF THE SCRIPT:
-sudo rm "$0"
+rm -- "$0"
