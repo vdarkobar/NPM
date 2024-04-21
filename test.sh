@@ -903,7 +903,7 @@ while true; do
     yn=$(echo "$yn" | tr '[:upper:]' '[:lower:]') # Convert input to lowercase
     case $yn in
         yes )
-            if ! cd $WORK_DIR; sudo docker compose up -d; then
+            if ! sudo docker compose -f $WORK_DIR/docker-compose.yml up -d; then
                 echo -e "${RED} Docker compose up failed. Check docker and docker compose installation.${NC}";
                 exit 1;
             fi
@@ -960,7 +960,6 @@ echo
 # Update permissions, assuming .secrets creation was successful
 sudo chown -R root:root $WORK_DIR/.secrets/
 sudo chmod -R 600 $WORK_DIR/.secrets/
-
 
 ##########################
 # Prompt user for reboot #
