@@ -843,6 +843,12 @@ echo
 # NPM #
 #######
 
+# Renew the WORK_DIR variable
+WORK_DIR=$HOME/npm
+
+# Take ownership of the working directory
+sudo chown -R $(whoami):$(whoami) $WORK_DIR
+
 # Prompt user for input
 echo -ne "${GREEN} Enter Time Zone (e.g. Europe/Berlin):${NC} "; read TZONE;
 echo
