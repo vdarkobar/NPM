@@ -888,9 +888,6 @@ done
 
 echo
 
-# Ensure .secrets directory exists before generating secrets
-#mkdir -p .secrets || { echo -e "${RED} Failed to create .secrets directory.${NC}"; exit 1; }
-
 # Generate secrets
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > $WORK_DIR/.secrets/db_root_pwd.secret || { echo -e "${RED} Failed to generate db_root_pwd.secret.${NC}"; exit 1; }
 echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > $WORK_DIR/.secrets/mysql_pwd.secret || { echo -e "${RED} Failed to generate mysql_pwd.secret.${NC}"; exit 1; }
@@ -898,11 +895,6 @@ echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > $WORK_DIR/.secrets/mysql_pw
 # Update .env file with user input
 sed -i "s|01|${TZONE}|" $WORK_DIR/.env || { echo -e "${RED} Failed to update Time Zone in .env file.${NC}"; exit 1; }
 sed -i "s|02|${PORTN}|" $WORK_DIR/.env || { echo -e "${RED} Failed to update Port Number in .env file.${NC}"; exit 1; }
-
-
-# Update permissions, assuming .secrets creation was successful
-sudo chown -R root:root $WORK_DIR/.secrets/
-sudo chmod -R 600 $WORK_DIR/.secrets/
 
 # Main loop for docker compose up command
 while true; do
@@ -965,6 +957,9 @@ echo
 sleep 0.5 # delay for 0.5 seconds
 echo
 
+# Update permissions, assuming .secrets creation was successful
+sudo chown -R root:root $WORK_DIR/.secrets/
+sudo chmod -R 600 $WORK_DIR/.secrets/
 
 ##########################
 # Prompt user for reboot #
