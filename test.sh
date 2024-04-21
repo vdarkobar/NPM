@@ -663,7 +663,7 @@ services:
         mode: host
 
       - target: 81
-        published: $PORT
+        published: \$PORT
         protocol: tcp
         mode: host
 
@@ -723,7 +723,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
     environment:
-      - TZ=$TZ
+      - TZ=\$TZ
       - WATCHTOWER_DEBUG=true
       - WATCHTOWER_CLEANUP=true
       - WATCHTOWER_REMOVE_VOLUMES=true
