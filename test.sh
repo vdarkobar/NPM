@@ -176,6 +176,7 @@ fi
 # Prepare hosts file #
 ######################
 
+echo
 echo -e "${GREEN} Setting up hosts file ${NC}"
 
 sleep 0.5 # delay for 0.5 seconds
