@@ -572,6 +572,11 @@ echo
 #######################################################
 # Start the installation of Docker and Docker Compose #
 #######################################################
+
+# Manually Stop the unattended-upgr Process (if running)
+# Stops the automatic updates temporarily, allowing install to proceed
+sudo systemctl stop unattended-upgrades
+
 echo
 echo -e "${GREEN} Starting the installation of Docker and Docker Compose (v2)...${NC}"
 echo
@@ -599,6 +604,9 @@ sudo usermod -aG docker $(whoami) || { echo -e "${RED} Failed to add the current
 
 # Verify installation
 sudo docker --version && docker compose version || { echo -e "${RED} Docker installation verification failed${NC}"; exit 1; }
+
+# ensure package manager status is okay
+sudo dpkg --configure -a
 
 echo
 echo -e "${GREEN} Docker and Docker Compose(v2) installation completed.${NC}"
