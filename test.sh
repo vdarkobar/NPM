@@ -556,7 +556,7 @@ echo
 ################################
 
 # Create directories
-sudo mkdir -p "$HOME/npm" "$HOME/npm/.secrets" "$HOME/npm/letsencrypt" || { echo -e "${RED} Failed to create directories${NC}"; exit 1; }
+mkdir -p "$HOME/npm" "$HOME/npm/.secrets" "$HOME/npm/letsencrypt" || { echo -e "${RED} Failed to create directories${NC}"; exit 1; }
 
 # Notify the creation of the directories
 echo -e "${GREEN} Created directories: 'npm', 'npm/.secrets', 'npm/letsencrypt'${NC}"
@@ -891,6 +891,7 @@ echo | tr -dc A-Za-z0-9 </dev/urandom | head -c 35 > $WORK_DIR/.secrets/mysql_pw
 # Update .env file with user input
 sed -i "s|01|${TZONE}|" $WORK_DIR/.env || { echo -e "${RED} Failed to update Time Zone in .env file.${NC}"; exit 1; }
 sed -i "s|02|${PORTN}|" $WORK_DIR/.env || { echo -e "${RED} Failed to update Port Number in .env file.${NC}"; exit 1; }
+
 
 # Update permissions, assuming .secrets creation was successful
 sudo chown -R root:root $WORK_DIR/.secrets/
