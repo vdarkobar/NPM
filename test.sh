@@ -961,6 +961,7 @@ echo
 sudo chown -R root:root $WORK_DIR/.secrets/
 sudo chmod -R 600 $WORK_DIR/.secrets/
 
+
 ##########################
 # Prompt user for reboot #
 ##########################
