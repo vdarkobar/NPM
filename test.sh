@@ -436,7 +436,7 @@ echo
 # Locking root account password #
 #################################
 
-echo -e "${GREEN}Locking root account password...${NC}"
+echo -e "${GREEN} Locking root account password...${NC}"
 echo
 
 # Attempt to lock the root account password
@@ -453,7 +453,7 @@ echo
 # Setting up SSH variables #
 ############################
 
-echo -e "${GREEN}Setting up SSH variables...${NC}"
+echo -e "${GREEN} Setting up SSH variables...${NC}"
 
 # Define the file path
 FILEPATH="/etc/ssh/sshd_config"
