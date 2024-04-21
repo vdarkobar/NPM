@@ -911,7 +911,7 @@ while true; do
     yn=$(echo "$yn" | tr '[:upper:]' '[:lower:]') # Convert input to lowercase
     case $yn in
         yes )
-            if ! sudo docker compose up -d; then
+            if ! cd $WORK_DIR; sudo docker compose up -d; then
                 echo -e "${RED} Docker compose up failed. Check docker and docker compose installation.${NC}";
                 exit 1;
             fi
