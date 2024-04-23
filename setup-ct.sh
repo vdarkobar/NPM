@@ -22,8 +22,50 @@ NC='\033[0m'
 # Intro message #
 #################
 
+# Get the short hostname directly
+HOSTNAME=$(hostname -s)
+
+# Extract the domain name from /etc/resolv.conf
+
+# Method 1: Using awk
+DOMAIN_LOCAL=$(awk -F' ' '/^domain/ {print $2; exit}' /etc/resolv.conf)
+if [[ -n "$DOMAIN_LOCAL" ]]; then
+    echo -e "${GREEN} Domain name found using:${NC} awk"
+else
+    # Method 2: Using sed
+    DOMAIN_LOCAL=$(sed -n 's/^domain //p' /etc/resolv.conf)
+    if [[ -n "$DOMAIN_LOCAL" ]]; then
+        echo -e "${GREEN} Domain name found using:${NC} sed"
+    else
+        echo -e "${RED} Domain name not found using available methods .${NC}"
+        exit 1
+    fi
+fi
+
+# IP Address extraction
+
+# Method 1: Using hostname -I to get the local IP address
+LOCAL_IP=$(hostname -I | awk '{print $1}') # Picks the first IP address
+if [[ -n "$LOCAL_IP" ]]; then
+    echo -e "${GREEN} IP Address found using:${NC} hostname -I"
+else
+    # Method 2: Parsing through ip addr show
+    LOCAL_IP=$(ip addr show | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | awk '{print $2}' | cut -d/ -f1 | grep -v '127.0.0.1')
+    if [[ -n "$LOCAL_IP" ]]; then
+        echo -e "${GREEN} IP Address parsed from uotput of:${NC} ip addr show"
+    else
+        echo -e "${RED} IP Address not found using available methods .${NC}"
+    fi
+fi
+
 echo
 echo -e "${GREEN} This script will install and configure${NC} Nginx Proxy Manager"
+echo
+echo
+echo -e "${GREEN} Local IP Address      :${NC} $LOCAL_IP"
+echo -e "${GREEN} Machine hostname      :${NC} $HOSTNAME"
+echo -e "${GREEN} Local domain          :${NC} $DOMAIN_LOCAL"
+echo
 echo
 echo -e "${GREEN} Be sure that you are logged in as a${NC} non-root ${GREEN}user and that user is added to the${NC} sudo ${GREEN}group"${NC}
 
@@ -631,8 +673,6 @@ fi
 echo -e "${GREEN} Creating docker-compose file...:${NC} $file_path"
 
 sudo tee "$file_path" > /dev/null <<EOF || { echo "Error: Failed to create $file_path"; exit 1; }
-version: "3.9"
-
 networks:
 
   npm:
