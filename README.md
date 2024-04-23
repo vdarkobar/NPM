@@ -20,7 +20,7 @@ Enable Port forwarding (80, 443) from your Router/Firewall to your NPM instance.
   
 #### Decide what you will use for:
   
-> *Directory name, Time Zone* and *NPM Port Number*.
+> *SSH Public key*, *Time Zone* and *NPM Port Number*.
   
 ### *Run this command*:
 *VM/CT*:
