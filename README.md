@@ -13,7 +13,7 @@
 ---  
 
 <p align="center">
-Enable Port forwarding (80, 443) from your Router/Firewall to your NPM instance (VM/CT).
+Enable Port forwarding (80, 443) from your Router/Firewall to your NPM instance.
 </p>  
 
 ---  
