@@ -23,6 +23,7 @@ Enable Port forwarding (80, 443) from your Router/Firewall to your NPM instance 
 > *Directory name, Time Zone* and *NPM Port Number*.
   
 ### *Run this command*:
+*VM/CT*:
 ```
 bash -c "$(wget -qLO - https://raw.githubusercontent.com/vdarkobar/NPM/main/setup.sh)"
 ``` 
