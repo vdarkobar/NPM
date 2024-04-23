@@ -989,7 +989,7 @@ echo
 echo -e "${GREEN} Local access:${NC} $LOCAL_IP:$PORTN"
 echo -e "${GREEN}             :${NC} $LOCAL_DOMAIN:$PORTN"
 echo
-echo -e "${GREEN} Use credentials:${NC}"
+echo -e "${GREEN} Use default NPM credentials:${NC}"
 echo
 echo -e "${GREEN} User name:${NC}    admin@example.com"
 echo -e "${GREEN} Password:${NC}     changeme"
