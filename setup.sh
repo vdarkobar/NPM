@@ -134,9 +134,24 @@ if ! sudo apt update; then
     exit 1
 fi
 
-# Install the necessary packages
-if ! sudo apt install -y ca-certificates curl gnupg lsb-release ufw fail2ban unattended-upgrades; then
-    echo -e "${RED}Failed to install packages. Exiting.${NC}"
+# Template packages
+if ! sudo apt install -y \
+    ufw \
+    wget \
+    curl \
+    gnupg2 \
+    argon2 \
+    fail2ban \
+    lsb-release \
+    gnupg-agent \
+    libpam-tmpdir \
+    bash-completion \
+    ca-certificates \
+    qemu-guest-agent \
+    unattended-upgrades \
+    cloud-initramfs-growroot \
+    software-properties-common; then
+    echo -e "${RED} Failed to install packages. Exiting.${NC}"
     exit 1
 fi
 
